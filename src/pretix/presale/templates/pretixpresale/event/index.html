@@ -108,7 +108,7 @@
                                             {% blocktrans trimmed with minprice=item.min_price|floatformat:2 currency=event.currency %}
                                                 from {{ currency }} {{ minprice }}
                                             {% endblocktrans %}
-                                        {% else %}
+                                        {% elif item.price > 0 %}
                                             {{ event.currency }} {{ item.min_price|floatformat:2 }}
                                         {% endif %}
                                     </div>
@@ -138,7 +138,7 @@
                                                                 name="price_{{ item.id }}_{{ var.id }}"
                                                                 step="any" value="{{ var.price|stringformat:"0.2f" }}">
                                                     </div>
-                                                {% else %}
+                                                {% elif var.price > 0 %}
                                                     {{ event.currency }} {{ var.price|floatformat:2 }}
                                                 {% endif %}
                                                 {% if item.tax_rate %}
@@ -191,9 +191,8 @@
                                                     min="{{ item.price|stringformat:"0.2f" }}"
                                                     name="price_{{ item.id }}"
                                                     step="any" value="{{ item.price|stringformat:"0.2f" }}">
-
                                         </div>
-                                    {% else %}
+                                    {% elif item.price > 0 %}
                                         {{ event.currency }} {{ item.price|floatformat:2 }}
                                     {% endif %}
                                     {% if item.tax_rate %}
