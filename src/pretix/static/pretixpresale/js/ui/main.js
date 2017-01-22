@@ -34,6 +34,24 @@ $(function () {
         $("#voucher-toggle").slideUp();
     });
 
+    $(".gpn-stepper-button").click(function (e) {
+        // GPN's dirty stepper button hack
+        var inputElements = $(this).siblings(".gpn-stepper-input");
+        console.assert(inputElements.length == 1, "expecting exactly one stepper input element in current scope");
+        var inputElement = inputElements[0];
+
+        var displayElements = $(this).siblings(".gpn-stepper-span");
+        console.assert(displayElements.length == 1, "expecting exactly one stepper display element in current scope");
+        var displayElement = displayElements[0];
+
+        var val = parseInt($(inputElement).val(), 10);
+        val += $(this).is(".gpn-stepper-minus") ? -1 : 1;
+        if (val >= 0) {
+            $(inputElement).val(val);
+            $(displayElement).text(val);
+        }
+    });
+
     $("#ajaxerr").on("click", ".ajaxerr-close", ajaxErrDialog.hide);
     
     // Copy answers
@@ -42,6 +60,8 @@ $(function () {
         var idx = $(this).data('id');
         copy_answers(idx);
     });
+
+
 });
 
 function copy_answers(idx) {    
