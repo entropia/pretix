@@ -6,6 +6,9 @@ from celery.exceptions import MaxRetriesExceededError
 from django.db.models import Q
 from django.utils.translation import ugettext as _
 
+from django.dispatch import receiver
+from pretix.base.signals import validate_cart
+
 from pretix.base.i18n import LazyLocaleException
 from pretix.base.models import (
     CartPosition, Event, Item, ItemVariation, Quota, Voucher,
@@ -40,6 +43,7 @@ error_messages = {
     'voucher_expired': _('This voucher is expired.'),
     'voucher_invalid_item': _('This voucher is not valid for this product.'),
     'voucher_required': _('You need a valid voucher code to order this product.'),
+    'gpn_admission_limit': _('Your cart must contain exactly one free registration.'),
 }
 
 
@@ -275,3 +279,8 @@ def remove_items_from_cart(self, event: int, items: List[dict], cart_id: str=Non
             self.retry()
     except (MaxRetriesExceededError, LockTimeoutException):
         raise CartError(error_messages['busy'])
+
+@receiver(validate_cart)
+def gpn_enforce_ticket_limit(sender, positions, **kwargs):
+    if positions.filter(item__admission=True).count() != 1:
+        raise CartError(error_messages['gpn_admission_limit'])

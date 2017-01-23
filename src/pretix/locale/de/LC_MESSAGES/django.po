@@ -1272,7 +1272,11 @@ msgid "You need a valid voucher code to order this product."
 msgstr ""
 "Sie benötigen einen gültigen Gutscheincode, um dieses Produkt zu bestellen."
 
-#: pretix/base/services/invoices.py:55
+#: pretix/base/services/cart.py:46
+msgid "Your cart must contain exactly one free registration."
+msgstr "Ihr Warenkorb muss genau eine kostenlose Anmeldung enthalten."
+
+#: pretix/base/services/invoices.py:56
 #, python-brace-format
 msgctxt "invoice"
 msgid ""
