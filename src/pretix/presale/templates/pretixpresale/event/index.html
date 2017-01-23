@@ -150,7 +150,7 @@
                                                 {% endif %}
                                             </div>
                                             {% if var.cached_availability.0 == 100 %}
-                                            <!-- GPN stepper buttons -->
+                                            <!-- GPN variation stepper buttons -->
                                                 <div class="col-md-2 col-xs-6 availability-box available">
                                                     <input type="hidden" class="gpn-stepper-input form-control input-item-count" placeholder="0" min="0"
                                                             max="{{ var.order_max }}"
@@ -212,7 +212,7 @@
                                     </div>
                                 {% elif item.cached_availability.0 == 100 %}
                                     <div class="col-md-2 col-xs-6 availability-box available">
-                                        <!-- GPN's hacky stepper -->
+                                        <!-- GPN no variations stepper buttons -->
                                         <input type="hidden" class="gpn-stepper-input form-control input-item-count" placeholder="0"
                                                 min="{{item.order_min}}"
                                                 max="{{ item.order_max }}" name="item_{{ item.id }}"
