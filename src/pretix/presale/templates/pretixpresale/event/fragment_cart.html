@@ -53,7 +53,7 @@
                         <input type="hidden" name="price_{{ line.item.id }}"
                                 value="{{ line.price }}" />
                     {% endif %}
-                    <button class="btn btn-mini btn-link"><i class="fa fa-minus"></i></button>
+                    <button {% if line.item.admission %} disabled {% endif %} class="btn btn-mini btn-link"><i class="fa fa-minus"></i></button>
                 </form>
                 {% endif %}
                 {{ line.count }}
@@ -72,7 +72,7 @@
                         <input type="hidden" name="price_{{ line.item.id }}"
                                 value="{{ line.price }}" />
                     {% endif %}
-                    <button class="btn btn-mini btn-link"><i class="fa fa-plus"></i></button>
+                    <button {% if line.item.admission %} disabled {% endif %} class="btn btn-mini btn-link"><i class="fa fa-plus"></i></button>
                 </form>
                 {% endif %}
             </div>

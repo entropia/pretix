@@ -100,8 +100,23 @@ class EventIndex(EventViewMixin, CartMixin, TemplateView):
 
         context['cart'] = self.get_cart()
         context['frontpage_text'] = str(self.request.event.settings.frontpage_text)
-        return context
 
+        has_admission = False
+        for p in context['cart']['positions']:
+            if p.item.admission == True:
+                has_admission = True
+                break
+
+        for item in items:
+            if item.admission:
+                if has_admission:
+                    item.order_min = 0
+                    item.order_max = 0
+                else:
+                    item.order_max = 1
+                    item.order_min = 1
+
+        return context
 
 class EventAuth(View):
 
