@@ -101,6 +101,7 @@ class EventIndex(EventViewMixin, CartMixin, TemplateView):
         context['cart'] = self.get_cart()
         context['frontpage_text'] = str(self.request.event.settings.frontpage_text)
 
+        # GPN-specific from here
         has_admission = False
         for p in context['cart']['positions']:
             if p.item.admission == True:
@@ -108,9 +109,9 @@ class EventIndex(EventViewMixin, CartMixin, TemplateView):
                 break
 
         for item in items:
-            if item.admission:
+            item.order_min = 0
+            if item.admission: # exactly one admission per order
                 if has_admission:
-                    item.order_min = 0
                     item.order_max = 0
                 else:
                     item.order_max = 1
