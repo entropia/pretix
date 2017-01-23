@@ -12,6 +12,9 @@
     {% endcompress %}
     {% if css_file %}
         <link rel="stylesheet" type="text/css" href="{{ css_file }}"/>
+    	{% compress css %}
+    	<link rel="stylesheet" type="text/x-scss" href="{% static "pretixpresale/scss/gpn.scss" %}"/>
+    	{% endcompress %}
     {% else %}
         {% compress css %}
             <link rel="stylesheet" type="text/x-scss" href="{% static "pretixpresale/scss/main.scss" %}"/>
