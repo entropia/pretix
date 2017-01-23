@@ -94,6 +94,18 @@ subclass of pretix.base.exporter.BaseExporter
 As with all event-plugin signals, the ``sender`` keyword argument will contain the event.
 """
 
+validate_cart = EventPluginSignal(
+    providing_args=["positions"]
+)
+"""
+This signal is sent out before the user starts checkout. It includes an iterable
+with the current CartPosition objects.
+The response of receivers will be ignored, but you can raise a CartError with an
+appropriate exception message.
+
+As with all event-plugin signals, the ``sender`` keyword argument will contain the event.
+"""
+
 order_placed = EventPluginSignal(
     providing_args=["order"]
 )
