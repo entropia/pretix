@@ -15,6 +15,9 @@ from django.views.generic import TemplateView
 from pretix.base.models import ItemVariation
 from pretix.multidomain.urlreverse import eventreverse
 
+from pretix.presale.signals import html_head
+from django.dispatch import receiver
+
 from . import CartMixin, EventViewMixin
 
 SessionStore = import_module(settings.SESSION_ENGINE).SessionStore
@@ -146,3 +149,24 @@ class EventAuth(View):
 
         request.session['pretix_event_access_{}'.format(request.event.pk)] = parent
         return redirect(eventreverse(request.event, 'presale:event.index'))
+
+
+@receiver(html_head)
+def gpn_html_head(sender, request, **kwargs):
+    return """
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  // tracker methods like "setCustomDimension" should be called before "trackPageView"
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//shop.entropia.de/piwik/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Piwik Code -->
+"""
