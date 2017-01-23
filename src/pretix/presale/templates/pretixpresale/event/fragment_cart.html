@@ -53,6 +53,7 @@
                         <input type="hidden" name="price_{{ line.item.id }}"
                                 value="{{ line.price }}" />
                     {% endif %}
+                    <!-- GPN disables button if item is an admission (exactly one admission per registration) -->
                     <button {% if line.item.admission %} disabled {% endif %} class="btn btn-mini btn-link"><i class="fa fa-minus"></i></button>
                 </form>
                 {% endif %}
@@ -72,6 +73,7 @@
                         <input type="hidden" name="price_{{ line.item.id }}"
                                 value="{{ line.price }}" />
                     {% endif %}
+                    <!-- GPN disables button if item is an admission (exactly one admission per registration) -->
                     <button {% if line.item.admission %} disabled {% endif %} class="btn btn-mini btn-link"><i class="fa fa-plus"></i></button>
                 </form>
                 {% endif %}
