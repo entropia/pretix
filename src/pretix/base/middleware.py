@@ -156,7 +156,7 @@ class SecurityMiddleware(MiddlewareMixin):
         resp['X-XSS-Protection'] = '1'
         h = {
             'default-src': "{static}",
-            'script-src': '{static} https://checkout.stripe.com https://js.stripe.com',
+            'script-src': '{static} https://shop.entropia.de https://checkout.stripe.com https://js.stripe.com',
             'object-src': "'none'",
             # frame-src is deprecated but kept for compatibility with CSP 1.0 browsers, e.g. Safari 9
             'frame-src': '{static} https://checkout.stripe.com https://js.stripe.com',
