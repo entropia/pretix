@@ -282,5 +282,20 @@ def remove_items_from_cart(self, event: int, items: List[dict], cart_id: str=Non
 
 @receiver(validate_cart)
 def gpn_enforce_ticket_limit(sender, positions, **kwargs):
+
     if positions.filter(item__admission=True).count() != 1:
         raise CartError(error_messages['gpn_admission_limit'])
+
+    # enter the most terrible hack possible in this situation
+    # corresponding code in src/pretix/presale/views/events.py
+    limited_items_count = dict()
+    for p in positions:
+        if '(max 1 p' in str(p.item.description):
+            key = "%s(id=%s)" % ( str(p.item.name), str(p.item.id) )
+            if not limited_items_count.get(key):
+                limited_items_count[key] = 0
+            limited_items_count[key] += 1
+
+    for prod,count in limited_items_count.items():
+        if count > 1:
+            raise CartError("At most one of '%s' allowed per registration.", (prod))

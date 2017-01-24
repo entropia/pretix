@@ -119,6 +119,8 @@ class EventIndex(EventViewMixin, CartMixin, TemplateView):
                 else:
                     item.order_max = 1
                     item.order_min = 1
+            if '(max 1 p' in str(item.description): # <= 1 of this item (corresponding check in src/pretix/base/services/cart.py )
+                item.order_max = 1
 
         return context
 
